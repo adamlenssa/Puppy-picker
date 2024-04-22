@@ -1,17 +1,17 @@
-import { Dog } from "../types";
+import { Dogs } from "../types";
 import { FavoriteButton } from "./FavoriteButton";
 import { TrashButton } from "./TrashButton";
 import { UnfavoriteButton } from "./UnfavoriteButton";
 
 // ! Do Not Make Changes To This File
 export const DogCard = ({
-  dog: { name, image, description, isFavorite },
+  dog: { name, image, description, isFavorite, id },
   onTrashIconClick,
   onEmptyHeartClick,
   onHeartClick,
   isLoading,
 }: {
-  dog: Dog;
+  dog: Dogs;
   onTrashIconClick: () => void;
   onEmptyHeartClick: () => void;
   onHeartClick: () => void;
