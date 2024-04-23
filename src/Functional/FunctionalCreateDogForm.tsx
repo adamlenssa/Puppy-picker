@@ -1,22 +1,23 @@
 import { useState } from "react";
 import { dogPictures } from "../dog-pictures";
 import { NewDog } from "../types";
+import { Requests } from "../api";
+import toast from "react-hot-toast";
 
 // use this as your default selected image
 const defaultSelectedImage = dogPictures.BlueHeeler;
 
 export const FunctionalCreateDogForm = ({
   getAllDogs,
+  isLoading,
+  isLoadingTrue,
+  isLoadingFalse,
 }: {
-  getAllDogs: () => Promise<any>;
+  getAllDogs: () => void;
+  isLoading: boolean;
+  isLoadingTrue: () => void;
+  isLoadingFalse: () => void;
 }) => {
-  const submitNewDog = (information: NewDog) => {
-    fetch("http://localhost:3000/dogs", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(information),
-    });
-  };
   const [newDog, setNewDog] = useState<NewDog>({
     name: "",
     image: "",
@@ -29,15 +30,29 @@ export const FunctionalCreateDogForm = ({
       id="create-dog-form"
       onSubmit={(e) => {
         e.preventDefault();
-        submitNewDog(newDog);
-        getAllDogs();
+        isLoadingTrue();
+        Requests.postDog(newDog)
+          .then(() => {
+            getAllDogs();
+            setNewDog({
+              name: "",
+              image: "",
+              description: "",
+              isFavorite: false,
+            });
+            toast.success("Thank you for creating a dog!!");
+          })
+          .finally(() => {
+            isLoadingFalse();
+          });
       }}
     >
       <h4>Create a New Dog</h4>
       <label htmlFor="name">Dog Name</label>
       <input
         type="text"
-        disabled={false}
+        value={newDog.name}
+        disabled={isLoading}
         onChange={(e) => {
           setNewDog({
             name: e.target.value,
@@ -49,6 +64,7 @@ export const FunctionalCreateDogForm = ({
       />
       <label htmlFor="description">Dog Description</label>
       <textarea
+        value={newDog.description}
         name=""
         id=""
         cols={80}
@@ -65,6 +81,7 @@ export const FunctionalCreateDogForm = ({
       ></textarea>
       <label htmlFor="picture">Select an Image</label>
       <select
+        value={newDog.image}
         id=""
         onChange={(e) => {
           setNewDog({
@@ -77,8 +94,6 @@ export const FunctionalCreateDogForm = ({
         defaultValue={defaultSelectedImage}
       >
         {Object.entries(dogPictures).map(([label, pictureValue]) => {
-          console.log(pictureValue);
-          console.log(label);
           return (
             <option value={pictureValue} key={pictureValue}>
               {label}

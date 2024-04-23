@@ -1,8 +1,7 @@
 // you can use this type for react children if you so choose
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ClassState, ShowState } from "../types";
-import { UnfavoriteButton } from "../Shared/UnfavoriteButton";
+import { ClassState, Dogs, ShowState } from "../types";
 
 export const FunctionalSection = ({
   children,
@@ -10,12 +9,16 @@ export const FunctionalSection = ({
   setComponent,
   activeClass,
   setActiveClass,
+  favorited,
+  unfavorited,
 }: {
   children: ReactNode;
   componentShow: ShowState;
   setComponent: React.Dispatch<React.SetStateAction<ShowState>>;
   activeClass: ClassState;
   setActiveClass: React.Dispatch<React.SetStateAction<ClassState>>;
+  favorited: Dogs[];
+  unfavorited: Dogs[];
 }) => {
   const resetActiveClass = {
     favorited: "",
@@ -55,7 +58,7 @@ export const FunctionalSection = ({
               setComponent(params2);
             }}
           >
-            favorited ( 12 )
+            favorited ( {favorited.length} )
           </div>
 
           {/* This should display the unfavorited count */}
@@ -83,7 +86,7 @@ export const FunctionalSection = ({
               setComponent(params2);
             }}
           >
-            unfavorited ( 25 )
+            unfavorited ( {unfavorited.length} )
           </div>
           <div
             className={`selector ${activeClass.createDog}`}

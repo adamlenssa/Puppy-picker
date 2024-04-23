@@ -15,48 +15,6 @@
       "id": 1
     },
     {
-      "name": "Thurman",
-      "image": "/assets/boxer.png",
-      "description": "subtle though jade indeed before island aha",
-      "isFavorite": true,
-      "id": 2
-    },
-    {
-      "name": "Orrin",
-      "image": "/assets/chihuahua.avif",
-      "description": "provided after despite till watcher",
-      "isFavorite": true,
-      "id": 3
-    },
-    {
-      "name": "Lucie",
-      "image": "/assets/dalmation.png",
-      "description": "psst justly browsing all solid",
-      "isFavorite": false,
-      "id": 4
-    },
-    {
-      "name": "Luella",
-      "image": "/assets/blue-heeler.png",
-      "description": "smoothly idolized naturally yum that till phew",
-      "isFavorite": false,
-      "id": 5
-    },
-    {
-      "name": "Shannon",
-      "image": "/assets/cowardly.png",
-      "description": "invite insistent brr truthfully athwart bah straddle assassination",
-      "isFavorite": true,
-      "id": 6
-    },
-    {
-      "name": "Imani",
-      "image": "/assets/dalmation.png",
-      "description": "rattle excluding skean on recovery",
-      "isFavorite": true,
-      "id": 7
-    },
-    {
       "name": "Danyka",
       "image": "/assets/chihuahua.avif",
       "description": "chillax daily sally however lest",
@@ -67,29 +25,15 @@
       "name": "Toby",
       "image": "/assets/blue-heeler.png",
       "description": "wildly forenenst rightfully till how",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 9
-    },
-    {
-      "name": "Tyson",
-      "image": "/assets/blue-heeler.png",
-      "description": "inequality maroon however nimble segregate",
-      "isFavorite": false,
-      "id": 10
     },
     {
       "name": "Eulalia",
       "image": "/assets/boxer.png",
       "description": "foolish rarely despite fooey frantically definitive jubilant dislike",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 11
-    },
-    {
-      "name": "Lawson",
-      "image": "/assets/cowardly.png",
-      "description": "uniform but wet cruelly knowledgeable",
-      "isFavorite": true,
-      "id": 12
     },
     {
       "name": "Cooper",
@@ -130,36 +74,29 @@
       "name": "Melyssa",
       "image": "/assets/cowardly.png",
       "description": "drat considering youthfully unfortunately whereas aside underline jealously",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 18
     },
     {
       "name": "Korey",
       "image": "/assets/chihuahua.avif",
       "description": "loosely at bossy surprisingly friendly for well-lit seldom",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 19
     },
     {
-      "name": "Lensa",
-      "image": "/assets/cowardly.png",
-      "description": "adadam",
+      "name": "Bob",
+      "image": "/assets/chihuahua.avif",
+      "description": "A very old dog that lays around all day",
       "isFavorite": false,
       "id": 20
     },
     {
-      "name": "adam",
-      "image": "/assets/dalmation.png",
-      "description": "llesa",
+      "name": "Adam",
+      "image": "/assets/chihuahua.avif",
+      "description": "Lazy dog that loves to sleep all day!",
       "isFavorite": false,
       "id": 21
-    },
-    {
-      "name": "adam",
-      "image": "/assets/dalmation.png",
-      "description": "llesa",
-      "isFavorite": false,
-      "id": 22
     }
   ]
 }

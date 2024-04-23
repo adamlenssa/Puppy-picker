@@ -5,7 +5,7 @@ import { UnfavoriteButton } from "./UnfavoriteButton";
 
 // ! Do Not Make Changes To This File
 export const DogCard = ({
-  dog: { name, image, description, isFavorite, id },
+  dog: { name, image, description, isFavorite },
   onTrashIconClick,
   onEmptyHeartClick,
   onHeartClick,
