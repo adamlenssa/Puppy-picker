@@ -1,15 +1,18 @@
 import { DogCard } from "../Shared/DogCard";
 import { Component } from "react";
-import { dogPictures } from "../dog-pictures";
 import { Dogs, ShowState } from "../types";
+import { Requests } from "../api";
 
 // Right now these dogs are constant, but in reality we should be getting these from our server
 export class ClassDogs extends Component<{
   allDogs: Dogs[];
   showState: ShowState;
+  setAllDogs: () => void;
+  setIsLoading: (boolean: boolean) => void
+  isLoading: boolean;
 }> {
   render() {
-    const { allDogs, showState } = this.props;
+    const { allDogs, showState, setAllDogs, setIsLoading, isLoading } = this.props;
     if (showState.allCards && !showState.favorited && !showState.unfavorited) {
       return (
         <>
@@ -18,15 +21,18 @@ export class ClassDogs extends Component<{
               dog={dog}
               key={dog.id}
               onTrashIconClick={() => {
-                alert("clicked trash");
+                setIsLoading(true)
+                Requests.deleteDog(dog).then(() => setAllDogs()).finally(()=> setIsLoading(false))
               }}
               onHeartClick={() => {
-                alert("clicked heart");
+                setIsLoading(true)
+                Requests.updateDog(dog).then(() => setAllDogs()).finally(()=> setIsLoading(false))
               }}
               onEmptyHeartClick={() => {
-                alert("clicked empty heart");
+                setIsLoading(true)
+                Requests.updateDog(dog).then(() => setAllDogs()).finally(()=> setIsLoading(false))
               }}
-              isLoading={false}
+              isLoading={isLoading}
             />
           ))}
         </>
@@ -42,18 +48,21 @@ export class ClassDogs extends Component<{
             .filter((dog) => dog.isFavorite)
             .map((dog) => (
               <DogCard
-                dog={dog}
-                key={dog.id}
-                onTrashIconClick={() => {
-                  alert("clicked trash");
-                }}
-                onHeartClick={() => {
-                  alert("clicked heart");
-                }}
-                onEmptyHeartClick={() => {
-                  alert("clicked empty heart");
-                }}
-                isLoading={false}
+              dog={dog}
+              key={dog.id}
+              onTrashIconClick={() => {
+                setIsLoading(true)
+                Requests.deleteDog(dog).then(() => setAllDogs()).finally(()=> setIsLoading(false))
+              }}
+              onHeartClick={() => {
+                setIsLoading(true)
+                Requests.updateDog(dog).then(() => setAllDogs()).finally(()=> setIsLoading(false))
+              }}
+              onEmptyHeartClick={() => {
+                setIsLoading(true)
+                Requests.updateDog(dog).then(() => setAllDogs()).finally(()=> setIsLoading(false))
+              }}
+              isLoading={isLoading}
               />
             ))}
         </>
@@ -69,18 +78,21 @@ export class ClassDogs extends Component<{
             .filter((dog) => !dog.isFavorite)
             .map((dog) => (
               <DogCard
-                dog={dog}
-                key={dog.id}
-                onTrashIconClick={() => {
-                  alert("clicked trash");
-                }}
-                onHeartClick={() => {
-                  alert("clicked heart");
-                }}
-                onEmptyHeartClick={() => {
-                  alert("clicked empty heart");
-                }}
-                isLoading={false}
+              dog={dog}
+              key={dog.id}
+              onTrashIconClick={() => {
+                setIsLoading(true)
+                Requests.deleteDog(dog).then(() => {setAllDogs()}).finally(()=> setIsLoading(false))
+              }}
+              onHeartClick={() => {
+                setIsLoading(true)
+                Requests.updateDog(dog).then(() => {setAllDogs()}).finally(()=> setIsLoading(false))
+              }}
+              onEmptyHeartClick={() => {
+                setIsLoading(true)
+                Requests.updateDog(dog).then(() => {setAllDogs()}).finally(()=> setIsLoading(false))
+              }}
+              isLoading={isLoading}
               />
             ))}
         </>
