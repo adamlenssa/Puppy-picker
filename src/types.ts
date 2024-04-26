@@ -1,4 +1,4 @@
-import React from "react";
+
 
 // Add your own custom types in here
 export type Dogs = {
@@ -27,8 +27,6 @@ export type NewDog = {
   isFavorite: boolean;
 };
 
-export type ClassState = {
-  favorited: string;
-  unfavorited: string;
-  createDog: string;
-};
+export type ClassState = 
+  'favorited' | 'unfavorited' | 'form' | 'all'
+

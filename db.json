@@ -67,14 +67,14 @@
       "name": "Bob",
       "image": "/assets/chihuahua.avif",
       "description": "A very old dog that lays around all day",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 20
     },
     {
       "name": "Adam",
       "image": "/assets/chihuahua.avif",
       "description": "Lazy dog that loves to sleep all day!",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 21
     },
     {

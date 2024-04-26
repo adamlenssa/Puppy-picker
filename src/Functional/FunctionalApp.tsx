@@ -1,26 +1,15 @@
 import { useState, useEffect } from "react";
 import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
-import { FunctionalDogsAll } from "./FunctionalDogsAll";
+import { FunctionalDogs } from "./FunctionalDogs";
 import { FunctionalSection } from "./FunctionalSection";
-import { ShowState, ClassState, Dogs } from "../types";
-import { FunctionalDogsFavorited } from "./FunctionalDogsFavorited";
-import { FunctionalDogsUnfavorited } from "./FunctionalDogsUnfavorited";
+import { ClassState, Dogs } from "../types";
 import { Requests } from "../api";
 import { Toaster } from "react-hot-toast";
 
 export function FunctionalApp() {
   const [allDogs, setAllDogs] = useState<Dogs[]>([]);
-  const [componentShow, SetComponentShow] = useState<ShowState>({
-    form: false,
-    favorited: false,
-    unfavorited: false,
-    allCards: true,
-  });
-  const [activeClass, setActiveClass] = useState<ClassState>({
-    favorited: "",
-    unfavorited: "",
-    createDog: "",
-  });
+  const [activeComponent, setActiveComponent] = useState<'dogs' | 'form'>('dogs')
+  const [activeTab, setActiveTab] = useState<ClassState>('all');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const isLoadingTrue = () => {
     setIsLoading(true);
@@ -38,8 +27,25 @@ export function FunctionalApp() {
         isLoadingFalse;
       });
   };
-  const favorited = allDogs.filter((dog) => dog.isFavorite);
-  const unfavorited = allDogs.filter((dog) => !dog.isFavorite);
+  const updateDog = (dog: Dogs) => {
+    setIsLoading(true)
+    Requests.updateDog(dog)
+      .then(() => {
+        getAllDogs();
+      })
+      .finally(() => setIsLoading(false));
+    getAllDogs();
+  };
+  const deleteDog = (dog: Dogs) => {
+    setIsLoading(true)
+    Requests.deleteDog(dog)
+      .then(() => {
+        getAllDogs();
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
   useEffect(() => {
     getAllDogs();
   }, []);
@@ -50,42 +56,17 @@ export function FunctionalApp() {
         <header>
           <h1>pup-e-picker (Functional)</h1>
         </header>
-        <FunctionalSection
-          componentShow={componentShow}
-          setComponent={SetComponentShow}
-          activeClass={activeClass}
-          setActiveClass={setActiveClass}
-          favorited={favorited}
-          unfavorited={unfavorited}
-        >
-          {componentShow.allCards && (
-            <FunctionalDogsAll
+        <FunctionalSection activeTab={activeTab} setActiveTab={setActiveTab} activeComponent={activeComponent} setActiveComponent={setActiveComponent} dogs={allDogs}>
+          {activeComponent == 'dogs' && (
+            <FunctionalDogs
               allDogs={allDogs}
-              getAllDogs={getAllDogs}
               isLoading={isLoading}
-              isLoadingFalse={isLoadingFalse}
-              isLoadingTrue={isLoadingTrue}
+              activeTab={activeTab}
+              deleteDog={deleteDog}
+              updateDog={updateDog}
             />
           )}
-          {componentShow.favorited && (
-            <FunctionalDogsFavorited
-              allDogs={allDogs}
-              getAllDogs={getAllDogs}
-              isLoading={isLoading}
-              isLoadingFalse={isLoadingFalse}
-              isLoadingTrue={isLoadingTrue}
-            />
-          )}
-          {componentShow.unfavorited && (
-            <FunctionalDogsUnfavorited
-              allDogs={allDogs}
-              getAllDogs={getAllDogs}
-              isLoading={isLoading}
-              isLoadingFalse={isLoadingFalse}
-              isLoadingTrue={isLoadingTrue}
-            />
-          )}
-          {componentShow.form && (
+          {activeComponent == 'form' && (
             <FunctionalCreateDogForm
               getAllDogs={getAllDogs}
               isLoading={isLoading}

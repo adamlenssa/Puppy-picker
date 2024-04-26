@@ -20,10 +20,11 @@ export const FunctionalCreateDogForm = ({
 }) => {
   const [newDog, setNewDog] = useState<NewDog>({
     name: "",
-    image: "",
+    image: defaultSelectedImage,
     description: "",
     isFavorite: false,
   });
+  
   return (
     <form
       action=""
@@ -36,7 +37,7 @@ export const FunctionalCreateDogForm = ({
             getAllDogs();
             setNewDog({
               name: "",
-              image: "",
+              image: defaultSelectedImage,
               description: "",
               isFavorite: false,
             });
@@ -81,7 +82,6 @@ export const FunctionalCreateDogForm = ({
       ></textarea>
       <label htmlFor="picture">Select an Image</label>
       <select
-        value={newDog.image}
         id=""
         onChange={(e) => {
           setNewDog({
@@ -91,7 +91,7 @@ export const FunctionalCreateDogForm = ({
             isFavorite: newDog.isFavorite,
           });
         }}
-        defaultValue={defaultSelectedImage}
+        defaultValue={dogPictures.BlueHeeler}
       >
         {Object.entries(dogPictures).map(([label, pictureValue]) => {
           return (

@@ -1,30 +1,25 @@
 // you can use this type for react children if you so choose
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ClassState, Dogs, ShowState } from "../types";
+import { ClassState, Dogs } from "../types";
 
 export const FunctionalSection = ({
   children,
-  componentShow,
-  setComponent,
-  activeClass,
-  setActiveClass,
-  favorited,
-  unfavorited,
+  activeTab,
+  setActiveTab,
+  dogs,
+  activeComponent,
+  setActiveComponent,
 }: {
   children: ReactNode;
-  componentShow: ShowState;
-  setComponent: React.Dispatch<React.SetStateAction<ShowState>>;
-  activeClass: ClassState;
-  setActiveClass: React.Dispatch<React.SetStateAction<ClassState>>;
-  favorited: Dogs[];
-  unfavorited: Dogs[];
+  activeTab: ClassState;
+  setActiveTab: React.Dispatch<React.SetStateAction<ClassState>>;
+  dogs: Dogs[];
+  activeComponent: 'dogs' | 'form';
+  setActiveComponent:React.Dispatch<React.SetStateAction<"form" | "dogs">> 
 }) => {
-  const resetActiveClass = {
-    favorited: "",
-    unfavorited: "",
-    createDog: "",
-  };
+  const favoritedLength = dogs.filter((dog) => dog.isFavorite).length;
+  const unfavoritedLength = dogs.filter((dog) => !dog.isFavorite).length;
   return (
     <section id="main-section">
       <div className="container-header">
@@ -35,81 +30,34 @@ export const FunctionalSection = ({
         <div className="selectors">
           {/* This should display the favorited count */}
           <div
-            className={`selector ${activeClass.favorited}`}
+            className={`selector ${activeComponent == 'dogs' && activeTab == 'favorited' && 'active'}`}
             onClick={() => {
-              const params =
-                activeClass.favorited == ""
-                  ? { unfavorited: "", favorited: "active", createDog: "" }
-                  : resetActiveClass;
-              setActiveClass(params);
-              const params2 = !componentShow.favorited
-                ? {
-                    favorited: true,
-                    unfavorited: false,
-                    allCards: false,
-                    form: false,
-                  }
-                : {
-                    favorited: false,
-                    unfavorited: false,
-                    allCards: true,
-                    form: false,
-                  };
-              setComponent(params2);
+              const body = activeTab !== 'favorited' ? 'favorited' : 'all';
+              setActiveTab(body)
+              setActiveComponent('dogs')
             }}
           >
-            favorited ( {favorited.length} )
+            favorited ( {favoritedLength} )
           </div>
 
           {/* This should display the unfavorited count */}
           <div
-            className={`selector ${activeClass.unfavorited}`}
+            className={`selector ${activeComponent == 'dogs' && activeTab == 'unfavorited' && 'active'}`}
             onClick={() => {
-              const params =
-                activeClass.unfavorited == ""
-                  ? { unfavorited: "active", favorited: "", createDog: "" }
-                  : resetActiveClass;
-              setActiveClass(params);
-              const params2 = !componentShow.unfavorited
-                ? {
-                    favorited: false,
-                    unfavorited: true,
-                    allCards: false,
-                    form: false,
-                  }
-                : {
-                    favorited: false,
-                    unfavorited: false,
-                    allCards: true,
-                    form: false,
-                  };
-              setComponent(params2);
+              const body = activeTab !== 'unfavorited' ? 'unfavorited' : 'all';
+              setActiveTab(body)
+              setActiveComponent('dogs')
             }}
           >
-            unfavorited ( {unfavorited.length} )
+            unfavorited ( {unfavoritedLength} )
           </div>
           <div
-            className={`selector ${activeClass.createDog}`}
+            className={`selector ${activeComponent == 'form' && 'active'}`}
             onClick={() => {
-              const params =
-                activeClass.createDog == ""
-                  ? { unfavorited: "", favorited: "", createDog: "active" }
-                  : resetActiveClass;
-              setActiveClass(params);
-              const params2 = !componentShow.form
-                ? {
-                    favorited: false,
-                    unfavorited: false,
-                    allCards: false,
-                    form: true,
-                  }
-                : {
-                    favorited: false,
-                    unfavorited: false,
-                    allCards: true,
-                    form: false,
-                  };
-              setComponent(params2);
+              const body = activeComponent == 'form' ? 'dogs' : 'form';
+              const body2 = activeTab !== 'all' ? 'all': 'all';
+              setActiveComponent(body)
+              setActiveTab(body2)
             }}
           >
             create dog
