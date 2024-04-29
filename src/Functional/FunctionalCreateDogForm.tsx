@@ -10,13 +10,11 @@ const defaultSelectedImage = dogPictures.BlueHeeler;
 export const FunctionalCreateDogForm = ({
   getAllDogs,
   isLoading,
-  isLoadingTrue,
-  isLoadingFalse,
+  setIsLoading,
 }: {
   getAllDogs: () => void;
   isLoading: boolean;
-  isLoadingTrue: () => void;
-  isLoadingFalse: () => void;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [newDog, setNewDog] = useState<NewDog>({
     name: "",
@@ -24,14 +22,14 @@ export const FunctionalCreateDogForm = ({
     description: "",
     isFavorite: false,
   });
-  
+
   return (
     <form
       action=""
       id="create-dog-form"
       onSubmit={(e) => {
         e.preventDefault();
-        isLoadingTrue();
+        setIsLoading(true);
         Requests.postDog(newDog)
           .then(() => {
             getAllDogs();
@@ -44,7 +42,7 @@ export const FunctionalCreateDogForm = ({
             toast.success("Thank you for creating a dog!!");
           })
           .finally(() => {
-            isLoadingFalse();
+            setIsLoading(false);
           });
       }}
     >

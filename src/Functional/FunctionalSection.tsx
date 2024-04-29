@@ -8,15 +8,11 @@ export const FunctionalSection = ({
   activeTab,
   setActiveTab,
   dogs,
-  activeComponent,
-  setActiveComponent,
 }: {
   children: ReactNode;
   activeTab: ClassState;
   setActiveTab: React.Dispatch<React.SetStateAction<ClassState>>;
   dogs: Dogs[];
-  activeComponent: 'dogs' | 'form';
-  setActiveComponent:React.Dispatch<React.SetStateAction<"form" | "dogs">> 
 }) => {
   const favoritedLength = dogs.filter((dog) => dog.isFavorite).length;
   const unfavoritedLength = dogs.filter((dog) => !dog.isFavorite).length;
@@ -30,11 +26,10 @@ export const FunctionalSection = ({
         <div className="selectors">
           {/* This should display the favorited count */}
           <div
-            className={`selector ${activeComponent == 'dogs' && activeTab == 'favorited' && 'active'}`}
+            className={`selector ${activeTab == "favorited" && "active"}`}
             onClick={() => {
-              const body = activeTab !== 'favorited' ? 'favorited' : 'all';
-              setActiveTab(body)
-              setActiveComponent('dogs')
+              const body = activeTab !== "favorited" ? "favorited" : "all";
+              setActiveTab(body);
             }}
           >
             favorited ( {favoritedLength} )
@@ -42,22 +37,19 @@ export const FunctionalSection = ({
 
           {/* This should display the unfavorited count */}
           <div
-            className={`selector ${activeComponent == 'dogs' && activeTab == 'unfavorited' && 'active'}`}
+            className={`selector ${activeTab == "unfavorited" && "active"}`}
             onClick={() => {
-              const body = activeTab !== 'unfavorited' ? 'unfavorited' : 'all';
-              setActiveTab(body)
-              setActiveComponent('dogs')
+              const body = activeTab !== "unfavorited" ? "unfavorited" : "all";
+              setActiveTab(body);
             }}
           >
             unfavorited ( {unfavoritedLength} )
           </div>
           <div
-            className={`selector ${activeComponent == 'form' && 'active'}`}
+            className={`selector ${activeTab == "form" && "active"}`}
             onClick={() => {
-              const body = activeComponent == 'form' ? 'dogs' : 'form';
-              const body2 = activeTab !== 'all' ? 'all': 'all';
-              setActiveComponent(body)
-              setActiveTab(body2)
+              const body2 = activeTab !== "form" ? "form" : "all";
+              setActiveTab(body2);
             }}
           >
             create dog

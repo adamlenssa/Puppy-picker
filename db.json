@@ -11,14 +11,14 @@
       "name": "Eulalia",
       "image": "/assets/boxer.png",
       "description": "foolish rarely despite fooey frantically definitive jubilant dislike",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 11
     },
     {
       "name": "Cooper",
       "image": "/assets/dalmation.png",
       "description": "furthermore when righteously when handlebar breathe considering so",
-      "isFavorite": false,
+      "isFavorite": true,
       "id": 13
     },
     {
@@ -69,13 +69,6 @@
       "description": "A very old dog that lays around all day",
       "isFavorite": true,
       "id": 20
-    },
-    {
-      "name": "Adam",
-      "image": "/assets/chihuahua.avif",
-      "description": "Lazy dog that loves to sleep all day!",
-      "isFavorite": true,
-      "id": 21
     },
     {
       "name": "Jon @ Devslopes",

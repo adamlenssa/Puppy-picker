@@ -4,51 +4,48 @@ import { FunctionalDogs } from "./FunctionalDogs";
 import { FunctionalSection } from "./FunctionalSection";
 import { ClassState, Dogs } from "../types";
 import { Requests } from "../api";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export function FunctionalApp() {
   const [allDogs, setAllDogs] = useState<Dogs[]>([]);
-  const [activeComponent, setActiveComponent] = useState<'dogs' | 'form'>('dogs')
-  const [activeTab, setActiveTab] = useState<ClassState>('all');
+  const [activeTab, setActiveTab] = useState<ClassState>("all");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const isLoadingTrue = () => {
-    setIsLoading(true);
-  };
-  const isLoadingFalse = () => {
-    setIsLoading(false);
-  };
+
   const getAllDogs = () => {
     Requests.getAllDogs()
       .then((res) => {
-        isLoadingTrue;
+        setIsLoading(true);
         setAllDogs(res);
-      })
-      .finally(() => {
-        isLoadingFalse;
-      });
-  };
-  const updateDog = (dog: Dogs) => {
-    setIsLoading(true)
-    Requests.updateDog(dog)
-      .then(() => {
-        getAllDogs();
-      })
-      .finally(() => setIsLoading(false));
-    getAllDogs();
-  };
-  const deleteDog = (dog: Dogs) => {
-    setIsLoading(true)
-    Requests.deleteDog(dog)
-      .then(() => {
-        getAllDogs();
       })
       .finally(() => {
         setIsLoading(false);
       });
   };
+
+  const updateDog = (dog: Dogs) => {
+    setIsLoading(true);
+    Requests.updateDog(dog)
+      .then(() => {
+        getAllDogs();
+      })
+      .finally(() => toast.success("Success"));
+  };
+
+  const deleteDog = (dog: Dogs) => {
+    setIsLoading(true);
+    Requests.deleteDog(dog)
+      .then(() => {
+        getAllDogs();
+      })
+      .finally(() => {
+        toast.success(`Bye ${dog.name}`);
+      });
+  };
+
   useEffect(() => {
     getAllDogs();
   }, []);
+
   return (
     <>
       <Toaster />
@@ -56,8 +53,12 @@ export function FunctionalApp() {
         <header>
           <h1>pup-e-picker (Functional)</h1>
         </header>
-        <FunctionalSection activeTab={activeTab} setActiveTab={setActiveTab} activeComponent={activeComponent} setActiveComponent={setActiveComponent} dogs={allDogs}>
-          {activeComponent == 'dogs' && (
+        <FunctionalSection
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          dogs={allDogs}
+        >
+          {activeTab !== "form" && (
             <FunctionalDogs
               allDogs={allDogs}
               isLoading={isLoading}
@@ -66,12 +67,11 @@ export function FunctionalApp() {
               updateDog={updateDog}
             />
           )}
-          {activeComponent == 'form' && (
+          {activeTab == "form" && (
             <FunctionalCreateDogForm
               getAllDogs={getAllDogs}
               isLoading={isLoading}
-              isLoadingFalse={isLoadingFalse}
-              isLoadingTrue={isLoadingTrue}
+              setIsLoading={setIsLoading}
             />
           )}
         </FunctionalSection>
