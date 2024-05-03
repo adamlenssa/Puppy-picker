@@ -2,20 +2,27 @@ import { useState, useEffect } from "react";
 import { FunctionalCreateDogForm } from "./FunctionalCreateDogForm";
 import { FunctionalDogs } from "./FunctionalDogs";
 import { FunctionalSection } from "./FunctionalSection";
-import { ClassState, Dogs } from "../types";
+import { TActiveTab, Dogs } from "../types";
 import { Requests } from "../api";
 import toast, { Toaster } from "react-hot-toast";
 
 export function FunctionalApp() {
   const [allDogs, setAllDogs] = useState<Dogs[]>([]);
-  const [activeTab, setActiveTab] = useState<ClassState>("all");
+  const [activeTab, setActiveTab] = useState<TActiveTab>("all");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const favoritedDogs = allDogs.filter((dog) => dog.isFavorite);
+  const unfavoritedDogs = allDogs.filter((dog) => !dog.isFavorite);
+
   const getAllDogs = () => {
-    Requests.getAllDogs()
+    return Requests.getAllDogs()
       .then((res) => {
         setIsLoading(true);
         setAllDogs(res);
+      })
+      .catch((err) => {
+        toast.error("error occured");
+        console.error(err);
       })
       .finally(() => {
         setIsLoading(false);
@@ -25,21 +32,21 @@ export function FunctionalApp() {
   const updateDog = (dog: Dogs) => {
     setIsLoading(true);
     Requests.updateDog(dog)
-      .then(() => {
-        getAllDogs();
+      .then(() => getAllDogs())
+      .then(() => toast.success("Success"))
+      .catch((err) => {
+        toast.error("error occured");
+        console.error(err);
       })
-      .finally(() => toast.success("Success"));
+      .finally(() => setIsLoading(false));
   };
 
   const deleteDog = (dog: Dogs) => {
     setIsLoading(true);
     Requests.deleteDog(dog)
-      .then(() => {
-        getAllDogs();
-      })
-      .finally(() => {
-        toast.success(`Bye ${dog.name}`);
-      });
+      .then(() => getAllDogs())
+      .then(() => toast.success(`Bye ${dog.name}`))
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
@@ -56,7 +63,8 @@ export function FunctionalApp() {
         <FunctionalSection
           activeTab={activeTab}
           setActiveTab={setActiveTab}
-          dogs={allDogs}
+          favoritedDogs={favoritedDogs}
+          unfavortiedDogs={unfavoritedDogs}
         >
           {activeTab !== "form" && (
             <FunctionalDogs
@@ -65,6 +73,8 @@ export function FunctionalApp() {
               activeTab={activeTab}
               deleteDog={deleteDog}
               updateDog={updateDog}
+              favoritedDogs={favoritedDogs}
+              unfavoritedDogs={unfavoritedDogs}
             />
           )}
           {activeTab == "form" && (

@@ -1,5 +1,3 @@
-
-
 // Add your own custom types in here
 export type Dogs = {
   name: string;
@@ -27,6 +25,4 @@ export type NewDog = {
   isFavorite: boolean;
 };
 
-export type ClassState = 
-  'favorited' | 'unfavorited' | 'form' | 'all'
-
+export type TActiveTab = "favorited" | "unfavorited" | "form" | "all";

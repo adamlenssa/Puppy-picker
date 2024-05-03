@@ -1,6 +1,5 @@
 import { DogCard } from "../Shared/DogCard";
-import { ClassState, Dogs } from "../types";
-
+import { TActiveTab, Dogs } from "../types";
 
 // Right now these dogs are constant, but in reality we should be getting these from our server
 export const FunctionalDogs = ({
@@ -9,67 +8,72 @@ export const FunctionalDogs = ({
   activeTab,
   updateDog,
   deleteDog,
+  favoritedDogs,
+  unfavoritedDogs,
 }: {
   allDogs: Dogs[];
   isLoading: boolean;
-  activeTab: ClassState;
+  activeTab: TActiveTab;
   updateDog: (dog: Dogs) => void;
   deleteDog: (dog: Dogs) => void;
-
+  favoritedDogs: Dogs[];
+  unfavoritedDogs: Dogs[];
 }) => {
-  const favoritedDogs = allDogs.filter((dog) => dog.isFavorite)
-  const unfavoritedDogs = allDogs.filter((dog) => !dog.isFavorite)
   return (
     //  the "<> </>"" are called react fragments, it's like adding all the html inside
     // without adding an actual html element
     <>
-      {activeTab == 'all' && allDogs.map((dog) => 
-        
+      {activeTab == "all" &&
+        allDogs.map((dog) => (
           <DogCard
             dog={dog}
             onTrashIconClick={() => {
-              deleteDog(dog)
+              deleteDog(dog);
             }}
             onEmptyHeartClick={() => {
-              updateDog(dog)
+              updateDog(dog);
             }}
             onHeartClick={() => {
-              updateDog(dog)
+              updateDog(dog);
             }}
             isLoading={isLoading}
             key={dog.id}
           />
-        
-      )}
-      {activeTab == 'favorited' && favoritedDogs.map((dog) => 
+        ))}
+      {activeTab == "favorited" &&
+        favoritedDogs.map((dog) => (
           <DogCard
             dog={dog}
             onTrashIconClick={() => {
-              deleteDog(dog)
+              deleteDog(dog);
             }}
             onEmptyHeartClick={() => {
-              updateDog(dog)
+              updateDog(dog);
             }}
             onHeartClick={() => {
-              updateDog(dog)
+              updateDog(dog);
             }}
             isLoading={isLoading}
             key={dog.id}
-          />)}
-      {activeTab == 'unfavorited' && unfavoritedDogs.map((dog) => <DogCard
+          />
+        ))}
+      {activeTab == "unfavorited" &&
+        unfavoritedDogs.map((dog) => (
+          <DogCard
             dog={dog}
             onTrashIconClick={() => {
-              deleteDog(dog)
+              deleteDog(dog);
             }}
             onEmptyHeartClick={() => {
-              updateDog(dog)
+              updateDog(dog);
             }}
             onHeartClick={() => {
-              updateDog(dog)
+              updateDog(dog);
             }}
             isLoading={isLoading}
             key={dog.id}
-          />)}
+          />
+        ))}
     </>
   );
 };

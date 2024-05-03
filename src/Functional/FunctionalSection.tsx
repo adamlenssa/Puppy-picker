@@ -1,21 +1,28 @@
 // you can use this type for react children if you so choose
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ClassState, Dogs } from "../types";
+import { TActiveTab, Dogs } from "../types";
 
 export const FunctionalSection = ({
   children,
   activeTab,
   setActiveTab,
-  dogs,
+  unfavortiedDogs,
+  favoritedDogs,
 }: {
   children: ReactNode;
-  activeTab: ClassState;
-  setActiveTab: React.Dispatch<React.SetStateAction<ClassState>>;
-  dogs: Dogs[];
+  activeTab: TActiveTab;
+  setActiveTab: React.Dispatch<React.SetStateAction<TActiveTab>>;
+  unfavortiedDogs: Dogs[];
+  favoritedDogs: Dogs[];
 }) => {
-  const favoritedLength = dogs.filter((dog) => dog.isFavorite).length;
-  const unfavoritedLength = dogs.filter((dog) => !dog.isFavorite).length;
+  const toggleTab = (tab: TActiveTab) => {
+    if (tab === activeTab) {
+      setActiveTab("all");
+    } else {
+      setActiveTab(tab);
+    }
+  };
   return (
     <section id="main-section">
       <div className="container-header">
@@ -28,28 +35,25 @@ export const FunctionalSection = ({
           <div
             className={`selector ${activeTab == "favorited" && "active"}`}
             onClick={() => {
-              const body = activeTab !== "favorited" ? "favorited" : "all";
-              setActiveTab(body);
+              toggleTab("favorited");
             }}
           >
-            favorited ( {favoritedLength} )
+            favorited ( {favoritedDogs.length} )
           </div>
 
           {/* This should display the unfavorited count */}
           <div
             className={`selector ${activeTab == "unfavorited" && "active"}`}
             onClick={() => {
-              const body = activeTab !== "unfavorited" ? "unfavorited" : "all";
-              setActiveTab(body);
+              toggleTab("unfavorited");
             }}
           >
-            unfavorited ( {unfavoritedLength} )
+            unfavorited ( {unfavortiedDogs.length} )
           </div>
           <div
             className={`selector ${activeTab == "form" && "active"}`}
             onClick={() => {
-              const body2 = activeTab !== "form" ? "form" : "all";
-              setActiveTab(body2);
+              toggleTab("form");
             }}
           >
             create dog

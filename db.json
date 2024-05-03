@@ -8,17 +8,10 @@
       "id": 1
     },
     {
-      "name": "Eulalia",
-      "image": "/assets/boxer.png",
-      "description": "foolish rarely despite fooey frantically definitive jubilant dislike",
-      "isFavorite": false,
-      "id": 11
-    },
-    {
       "name": "Cooper",
       "image": "/assets/dalmation.png",
       "description": "furthermore when righteously when handlebar breathe considering so",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 13
     },
     {
